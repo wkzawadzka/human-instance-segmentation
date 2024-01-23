@@ -5,21 +5,31 @@ from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.losses import BinaryCrossentropy
 from tensorflow.keras.applications import VGG16
 from tensorflow.keras.initializers import GlorotUniform
+from tensorflow.keras.optimizers import Adam, RMSprop
+from tensorflow.keras.optimizers.legacy import SGD
 
 
 class VGG16_UNet:
-    def __init__(self, inputs, doBatchNorm: bool, doDropout: bool = True, dropout_rate: float = 0.3) -> None:
+    def __init__(self, inputs, doBatchNorm: bool, learning_rate: float, optimizer='sgd', loss_function=BinaryCrossentropy(), dropout_rate: float = 0.3) -> None:
         ''' initialization of the network '''
         # 1 class: human
         self.classes = 1
         # inputs of form Input(shape=x)
         self.inputs = inputs
         # doDropout: disable or enable droput layer
-        self.dropout = doDropout
+        self.dropout = dropout_rate == 0
         # dropout_rate: rate of dropout, deafult 0.3
         self.dropout_rate = dropout_rate
         # doBatchNorm: disable or enable batch normalization
         self.batch_norm = doBatchNorm
+        # loss function & optimizer
+        self.loss = loss_function
+        if optimizer == 'adam':
+            self.optimizer = Adam(learning_rate=learning_rate)
+        elif optimizer == 'rmsprop':
+            self.optimizer = RMSprop(learning_rate=learning_rate)
+        else:
+            self.optimizer = SGD(learning_rate=learning_rate, momentum=0.99)
         # importing VGG-16 pretrained network without top 3 layers
         self.vgg16 = VGG16(include_top=False,
                            weights="imagenet", input_tensor=self.inputs)

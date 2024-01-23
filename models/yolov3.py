@@ -69,7 +69,7 @@ class YOLOv3_human:
         return frame
 
     def detect(self, image):
-        blob = cv2.dnn.blobFromImage(image, 1, swapRB=True, crop=False)
+        blob = cv2.dnn.blobFromImage(image, 1/255.0, swapRB=True, crop=False)
         # fowrard pass
         self.net.setInput(blob)
         out = self.net.forward(self.output_ln)
