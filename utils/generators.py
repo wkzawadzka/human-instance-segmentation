@@ -18,9 +18,9 @@ class DataGenerator(tf.keras.utils.Sequence):
         * For technical reasons, need to be a multiple of 32 to work with U-Net.
     '''
 
-    def __init__(self, file_paths, width=32*20, height=32*14, batch_size=32, shuffle_data=True, rescale=True):
+    def __init__(self, file_paths, width=32*20, height=32*14, batch_size=32, shuffle_data=True, rescale=True, complementary='semantic'):
         self.file_paths = self.sort_file_paths(file_paths)
-        self.masks_paths = [file.replace('img', 'semantic')
+        self.masks_paths = [file.replace('img', complementary)
                             for file in self.file_paths]
         self.batch_size = batch_size
         self.shuffle_data = shuffle_data
