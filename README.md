@@ -24,6 +24,22 @@ Dataset has been suited to segmentation of people and made smaller in `step0_pre
 
 Finally, in `step2_instance_segmentation.ipynb`, using pretrained YOLO and trained VGG-UNet models, instance segmentation is performed.
 
+### Method
+
+Two-stage approach of object detection with YOLO combined with semantic segmentation of patches using U-Net with VGG encoder.
+
+![](./images/architecture.png)
+
+### Examplar results
+
+![](./images/nice-example.png)
+![](./images/nice-example-2.png)
+![](./images/overlapping-instances.png)
+
+### Todo
+
+- Greater entering resolution/Random cropping to improve quality of internal UNet segmentation and allow YOLO to recognize smaller instances
+
 ### Citations
 
 - M. Cordts, M. Omran, S. Ramos, T. Rehfeld, M. Enzweiler, R. Benenson, U. Franke, S. Roth, and B. Schiele, "The Cityscapes Dataset for Semantic Urban Scene Understanding," in CVPR 2016.
